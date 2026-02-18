@@ -46,38 +46,6 @@
       max-width: 240px;
       height: auto;
       filter: brightness(1.1);
-    }<button onclick="showAdmin()" style="margin-top: 2rem; padding: 0.8rem 1.5rem; font-size: 1.1rem; background: #238636; color: white; border: none; border-radius: 6px; cursor: pointer;">
-  Admin (Update Counter)
-</button>
-    .admin-area {
-      margin-top: 4rem;
-      padding: 1.5rem;
-      background: rgba(22, 27, 34, 0.7);
-      border-radius: 12px;
-      border: 1px solid #30363d;
-      width: 100%;
-      max-width: 420px;
-    }
-    input, button {
-      padding: 0.8rem 1.2rem;
-      font-size: 1.1rem;
-      border-radius: 6px;
-      border: 1px solid #30363d;
-      background: #161b22;
-      color: #e6edf3;
-    }
-    button {
-      background: #238636;
-      border-color: #238636;
-      cursor: pointer;
-      font-weight: 600;
-    }
-    button:hover {
-      background: #2ea043;
-      border-color: #2ea043;
-    }
-    .hidden {
-      display: none;
     }
   </style>
 </head>
@@ -86,7 +54,7 @@
   <div class="container">
     <h1>Devs online in GH</h1>
     
-    <div class="counter" id="current">0</div>
+    <div class="counter" id="current">197</div>
     <div class="total">/ 212</div>
 
     <div class="logo-container">
@@ -97,57 +65,21 @@
         onerror="this.src='https://via.placeholder.com/240x80/161b22/58a6ff?text=G2i';"
       >
     </div>
-
-    <!-- Simple admin controls – will be hidden unless password matches -->
-    <div class="admin-area" id="admin">
-      <div style="margin-bottom: 1rem;">
-        <input type="number" id="newCount" min="0" max="212" value="0" style="width: 90px; text-align:center;">
-        <button onclick="updateCount()">Update</button>
-      </div>
-      <small style="color:#8b949e;">Only you should see this section after entering the password</small>
-    </div>
   </div>
 
-  
-<script>
-  const COUNTER_KEY = 'gh-devs-online-count';
-  const PASSWORD = 'g2i2026';  // ← CHANGE THIS to your secret!
+  <script>
+    // Hardcoded count — everyone sees the same number
+    // To change it: edit this file on GitHub and update the number below
+    const count = 197;
 
-  const currentEl = document.getElementById('current');
-  const adminEl = document.getElementById('admin');
+    document.getElementById('current').textContent = count;
 
-  // Load count
-  let count = Number(localStorage.getItem(COUNTER_KEY)) || 0;
-  currentEl.textContent = count;
-
-  // Hide admin area by default
-  adminEl.classList.add('hidden');
-
-  // Function to show admin if password correct
-  window.showAdmin = function() {
-    const pass = prompt("Enter admin password:");
-    if (pass === PASSWORD) {
-      adminEl.classList.remove('hidden');
-      alert("Admin mode unlocked!");
-    } else if (pass !== null) {  // null = cancel
-      alert("Incorrect password.");
-    }
-  };
-
-  // Update function (now global so button can call it)
-  window.updateCount = function() {
-    const newVal = Number(document.getElementById('newCount').value);
-    if (!isNaN(newVal) && newVal >= 0 && newVal <= 212) {
-      count = newVal;
-      localStorage.setItem(COUNTER_KEY, count);
-      currentEl.textContent = count;
-      alert(`Count updated to ${count}`);
-    } else {
-      alert("Invalid number (0–212 only).");
-    }
-  };
-</script>
-
+    // Optional: auto-refresh every 30 seconds so people see updates quickly
+    // (uncomment the line below if you want this)
+    // setInterval(() => location.reload(), 30000);
+  </script>
 
 </body>
 </html>
+
+
