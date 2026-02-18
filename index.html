@@ -106,39 +106,46 @@
     </div>
   </div>
 
-  <script>
-    const COUNTER_KEY = 'gh-devs-online-count';
-    const PASSWORD = 'g2i2026';           // ← CHANGE THIS to your own secret password
+  
+<script>
+  const COUNTER_KEY = 'gh-devs-online-count';
+  const PASSWORD = 'g2i2026';  // ← CHANGE THIS to your secret!
 
-    const currentEl = document.getElementById('current');
-    const adminEl   = document.getElementById('admin');
+  const currentEl = document.getElementById('current');
+  const adminEl = document.getElementById('admin');
 
-    // Load saved count
-    let count = Number(localStorage.getItem(COUNTER_KEY)) || 0;
-    currentEl.textContent = count;
+  // Load count
+  let count = Number(localStorage.getItem(COUNTER_KEY)) || 0;
+  currentEl.textContent = count;
 
-    // Very basic "admin" check – just prevents casual visitors from seeing/updating
-    const pass = prompt("Enter admin password (leave blank to view only):");
-    
+  // Hide admin area by default
+  adminEl.classList.add('hidden');
+
+  // Function to show admin if password correct
+  window.showAdmin = function() {
+    const pass = prompt("Enter admin password:");
     if (pass === PASSWORD) {
       adminEl.classList.remove('hidden');
-      
-      window.updateCount = function() {
-        const newVal = Number(document.getElementById('newCount').value);
-        if (!isNaN(newVal) && newVal >= 0 && newVal <= 212) {
-          count = newVal;
-          localStorage.setItem(COUNTER_KEY, count);
-          currentEl.textContent = count;
-          alert(`Count updated to ${count}`);
-        }
-      };
+      alert("Admin mode unlocked!");
+    } else if (pass !== null) {  // null = cancel
+      alert("Incorrect password.");
     }
+  };
 
-    // Optional: auto-refresh every 15 seconds (in case multiple people view it)
-    // setInterval(() => {
-    //   location.reload();
-    // }, 15000);
-  </script>
+  // Update function (now global so button can call it)
+  window.updateCount = function() {
+    const newVal = Number(document.getElementById('newCount').value);
+    if (!isNaN(newVal) && newVal >= 0 && newVal <= 212) {
+      count = newVal;
+      localStorage.setItem(COUNTER_KEY, count);
+      currentEl.textContent = count;
+      alert(`Count updated to ${count}`);
+    } else {
+      alert("Invalid number (0–212 only).");
+    }
+  };
+</script>
+
 
 </body>
 </html>
